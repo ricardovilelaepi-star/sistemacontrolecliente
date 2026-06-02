@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão de Carteira | Ricardo Vilela — SST</title>
+<style>
+:root{--p:#1a1a2e;--a:#0f3460;--hl:#e94560;--ok:#00b894;--w:#fdcb6e;--dg:#e17055;--i:#74b9ff;--bg:#f0f2f5;--c:#fff;--t:#2d3436;--m:#636e72;--b:#dfe6e9;--pu:#6c5ce7}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',Tahoma,sans-serif;background:var(--bg);color:var(--t);line-height:1.5;font-size:14px}
+.hd{background:linear-gradient(135deg,var(--p),var(--a));color:#fff;padding:13px 18px;position:sticky;top:0;z-index:100;box-shadow:0 3px 12px rgba(0,0,0,.15)}.hd h1{font-size:1.15em}.hd p{font-size:.7em;opacity:.7}
+.hr{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}.ha{display:flex;gap:4px}
+.bt{padding:4px 10px;border:none;border-radius:5px;cursor:pointer;font-size:.7em;font-weight:600}.bs{background:var(--ok);color:#fff}.be{background:var(--i);color:#fff}.bc{background:var(--dg);color:#fff}
+.ct{max-width:1660px;margin:0 auto;padding:10px}
+.kg{display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:5px;margin-bottom:8px}
+.kc{background:var(--c);border-radius:7px;padding:8px 4px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,.03);border-left:3px solid var(--a)}.kc.dn{border-left-color:var(--dg)}.kc.wn{border-left-color:var(--w)}.kc.sc{border-left-color:var(--ok)}.kc.ic{border-left-color:var(--i)}.kc.hc{border-left-color:var(--hl)}.kc.lc{border-left-color:#636e72}.kc.pc{border-left-color:var(--pu)}
+.kv{font-size:1.3em;font-weight:800;color:var(--p)}.kl{font-size:.55em;color:var(--m);text-transform:uppercase;letter-spacing:.2px}
+.se{background:var(--c);border-radius:7px;padding:11px;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+.st{font-size:.88em;font-weight:700;color:var(--p);margin-bottom:6px;padding-bottom:5px;border-bottom:2px solid var(--bg)}
+.fb{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.sb{flex:1;min-width:150px;padding:5px 7px;border:2px solid var(--b);border-radius:5px;font-size:.78em}.sb:focus{outline:none;border-color:var(--a)}
+.fs{padding:5px 6px;border:2px solid var(--b);border-radius:5px;font-size:.76em;background:#fff;cursor:pointer;min-width:100px}
+.tw{overflow-x:auto;border-radius:5px;border:1px solid var(--b)}
+table{width:100%;border-collapse:collapse;font-size:.68em}
+thead th{background:var(--p);color:#fff;padding:5px 3px;text-align:left;font-weight:600;font-size:.72em;text-transform:uppercase;position:sticky;top:0;white-space:nowrap;cursor:pointer}thead th:hover{background:var(--a)}
+tbody tr{border-bottom:1px solid var(--b)}tbody tr:hover{background:#f8f9fa}tbody td{padding:2px 2px;vertical-align:middle}
+.ei{width:100%;padding:2px 3px;border:1px solid var(--b);border-radius:2px;font-size:.85em;font-family:inherit;background:#fafafa}.ei:focus{outline:none;border-color:var(--a);background:#fff}
+select.ei{cursor:pointer}
+.sb2{padding:1px 4px;border-radius:12px;font-size:.64em;font-weight:700;text-transform:uppercase;white-space:nowrap;display:inline-block}
+.sv{background:#fdeded;color:#c0392b}.s3{background:#fef3e2;color:#e17055}.s6{background:#fef9e7;color:#f39c12}.s9{background:#eafaf1;color:#27ae60}.so{background:#ebf5fb;color:#2980b9}.sp{background:#f4f4f4;color:#999}
+.tp{padding:1px 3px;border-radius:3px;font-size:.65em;font-weight:600}.tj{background:#dfe6e9;color:var(--p)}.tf{background:#ffeaa7;color:#6c5500}
+.rv{background:#fff5f5!important}.r3{background:#fffbf0!important}.rn{background:#f9f0f0!important;opacity:.7}.ra{background:#f8f0ff!important}
+.oi{width:100%;padding:2px 3px;border:1px solid var(--b);border-radius:2px;font-size:.8em;font-family:inherit;background:#fafafa;height:20px}.oi:focus{outline:none;border-color:var(--a)}
+.rc{font-size:.73em;color:var(--m);padding:2px 0}.rc b{color:var(--p)}
+.to{position:fixed;bottom:16px;right:16px;background:var(--ok);color:#fff;padding:8px 13px;border-radius:7px;font-weight:600;font-size:.76em;box-shadow:0 3px 10px rgba(0,0,0,.2);display:none;z-index:999}
+.pb{background:#e9ecef;border-radius:7px;overflow:hidden;height:14px;margin-top:3px}.pf{height:100%;background:linear-gradient(90deg,var(--hl),var(--ok));border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.58em;color:#fff;font-weight:700}
+.lb{display:flex;gap:7px;flex-wrap:wrap;margin-top:3px}.li{display:flex;align-items:center;gap:2px;font-size:.63em;color:var(--m)}.ld{width:6px;height:6px;border-radius:50%}
+.fn{background:linear-gradient(135deg,#0c2340,#1a4b8c);border-radius:10px;padding:14px;margin-bottom:9px;color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.1)}
+.f0{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.1)}
+.f0 label{font-size:.65em;opacity:.5;text-transform:uppercase;letter-spacing:.3px}
+.fl{padding:5px 7px;border:2px solid rgba(255,255,255,.15);border-radius:6px;background:rgba(255,255,255,.06);color:#fff;font-size:.78em;font-weight:600;cursor:pointer;min-width:90px}
+.fl option{background:#1a1a2e;color:#fff}
+.fg{padding:5px 10px;border:none;border-radius:6px;color:#fff;font-weight:700;font-size:.76em;cursor:pointer}.fgg{background:var(--ok)}.fgc{background:rgba(255,255,255,.1)}
+.fc{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:8px;margin-bottom:10px}
+.fd{border-radius:8px;padding:11px;text-align:center}.fd.cr{background:linear-gradient(135deg,#00b894,#00cec9)}.fd.ca{background:linear-gradient(135deg,#fdcb6e,#f39c12);color:#6c5500}.fd.cp{background:linear-gradient(135deg,#0984e3,#6c5ce7)}.fd.ct2{background:linear-gradient(135deg,#e17055,#e94560)}
+.fd .fdi{font-size:1em;margin-bottom:1px}.fd .fdv{font-size:1.4em;font-weight:800;line-height:1.1}.fd .fdl{font-size:.58em;text-transform:uppercase;letter-spacing:.3px;opacity:.8;margin-top:1px}.fd .fds{font-size:.65em;opacity:.6;margin-top:2px}
+.ftt{font-size:.65em;opacity:.4;text-transform:uppercase;letter-spacing:.3px;margin-bottom:5px}
+.fm2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:6px}
+.fm{border-radius:6px;padding:9px;border-left:3px solid rgba(255,255,255,.12)}.fm.mr{background:rgba(0,184,148,.1);border-left-color:#00b894}.fm.mp{background:rgba(108,92,231,.1);border-left-color:#6c5ce7}
+.fmh{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}.fmm{font-size:.78em;font-weight:700}.fmt{font-size:.95em;font-weight:800}
+.fmtg{font-size:.52em;padding:1px 4px;border-radius:6px;font-weight:700;display:inline-block;margin-left:2px}.tr{background:#00b894}.ta{background:#f39c12;color:#6c5500}.tpp{background:#6c5ce7}
+.fmc{margin-top:2px}.fml{display:flex;justify-content:space-between;align-items:center;padding:2px 0;border-top:1px solid rgba(255,255,255,.04);font-size:.73em}.fml:first-child{border-top:none}
+.fmn{opacity:.85;max-width:52%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.fmvl{font-weight:700}
+.fms{font-size:.62em;padding:1px 3px;border-radius:4px;font-weight:600;margin-left:2px}.sr{background:rgba(0,184,148,.3)}.sa{background:rgba(253,203,110,.3)}.spp{background:rgba(108,92,231,.3)}
+.fe{text-align:center;padding:12px;opacity:.3;font-size:.82em}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:5px}
+.ai{background:var(--bg);padding:7px;border-radius:5px;text-align:center}.ai .al{font-size:.6em;color:var(--m);text-transform:uppercase}.ai .av{font-size:.95em;font-weight:800;color:var(--p)}
+@media(max-width:768px){.ct{padding:6px}.kg{grid-template-columns:repeat(2,1fr)}.fb{flex-direction:column}.sb{min-width:100%}}
+</style>
+</head>
+<body>
+<div class="hd"><div class="hr"><div><h1>📋 Gestão de Carteira — Base Unificada</h1><p>Ricardo Vilela — SST | <span id="dt"></span></p></div><div class="ha"><button class="bt bs" onclick="salvar()">💾 Salvar</button><button class="bt be" onclick="csv()">📤 CSV</button><button class="bt bc" onclick="limpar()">🗑️ Limpar</button></div></div></div>
+<div class="ct">
+<div class="kg">
+<div class="kc ic"><div class="kv" id="kT">0</div><div class="kl">Total</div></div>
+<div class="kc sc"><div class="kv" id="kA">0</div><div class="kl">✅ Ativos</div></div>
+<div class="kc dn"><div class="kv" id="kV">0</div><div class="kl">⚠️ Vencidos</div></div>
+<div class="kc wn"><div class="kv" id="k3">0</div><div class="kl">30d</div></div>
+<div class="kc"><div class="kv" id="k6">0</div><div class="kl">60d</div></div>
+<div class="kc lc"><div class="kv" id="kN">0</div><div class="kl">❌ Não Ren.</div></div>
+<div class="kc hc"><div class="kv" id="kG">0</div><div class="kl">🔄 Negoc.</div></div>
+<div class="kc pc"><div class="kv" id="kX">0</div><div class="kl">📋 Ant.</div></div>
+<div class="kc"><div class="kv" id="kP">0</div><div class="kl">Sem Sit.</div></div>
+<div class="kc hc"><div class="kv" id="kC">0%</div><div class="kl">% Class.</div></div>
+</div>
+<div class="fn">
+<div class="f0"><label>📅 Filtrar:</label><select class="fl" id="fM"><option value="t">Todos Meses</option><option value="0">Janeiro</option><option value="1">Fevereiro</option><option value="2">Março</option><option value="3">Abril</option><option value="4">Maio</option><option value="5">Junho</option><option value="6">Julho</option><option value="7">Agosto</option><option value="8">Setembro</option><option value="9">Outubro</option><option value="10">Novembro</option><option value="11">Dezembro</option></select><select class="fl" id="fA"><option value="t">Todos Anos</option></select><button class="fg fgg" onclick="uF()">🔍</button><button class="fg fgc" onclick="document.getElementById('fM').value='t';document.getElementById('fA').value='t';uF()">✕</button><span style="font-size:.6em;opacity:.35;margin-left:auto">Contrato anual projeta em cada ano</span></div>
+<div class="fc" id="fC"></div>
+<div class="ftt">📅 Detalhamento — <span style="color:#00b894">■</span> Pago <span style="color:#f39c12">■</span> A Receber <span style="color:#6c5ce7">■</span> Projeção</div>
+<div class="fm2" id="fD"></div>
+</div>
+<div class="se"><div class="st">📊 Progresso</div><div class="pb"><div class="pf" id="pB" style="width:0%">0%</div></div><div class="lb"><div class="li"><span class="ld" style="background:#00b894"></span>Ativo</div><div class="li"><span class="ld" style="background:#c0392b"></span>Não Ren.</div><div class="li"><span class="ld" style="background:#e17055"></span>Negoc.</div><div class="li"><span class="ld" style="background:#6c5ce7"></span>Ant.</div></div></div>
+<div class="se"><div class="st">🔍 Busca e Filtros</div><div class="fb"><input type="text" class="sb" id="sI" placeholder="Buscar razão, fantasia, doc, obs..." oninput="filt()"><select class="fs" id="fSi" onchange="filt()"><option value="t">Todas Sit.</option><option value="ativo">✅ Ativo</option><option value="nao_renovado">❌ Não Ren.</option><option value="negociacao">🔄 Negoc.</option><option value="novo">🆕 Novo</option><option value="anterior">📋 Ant.</option><option value="">Sem</option></select><select class="fs" id="fSt" onchange="filt()"><option value="t">Todos Venc.</option><option value="vencido">Vencidos</option><option value="30">≤30d</option><option value="60">≤60d</option><option value="ok">OK</option><option value="pendente">Sem data</option></select><select class="fs" id="fTp" onchange="filt()"><option value="t">PF+PJ</option><option value="pj">PJ</option><option value="pf">PF</option></select><select class="fs" id="fOr" onchange="filt()"><option value="t">Todas Orig.</option><option value="a">Atual</option><option value="x">Anterior</option></select></div><div class="rc" id="rC"></div></div>
+<div class="se" style="padding:5px"><div class="tw"><table><thead><tr><th onclick="srt(0)" style="width:20px">#</th><th onclick="srt(1)">Razão Social</th><th onclick="srt(2)">Fantasia</th><th>Tp</th><th>Doc</th><th>Or</th><th>Situação</th><th>Ctr</th><th onclick="srt(8)">Vencimento</th><th>Resp.</th><th>Tel</th><th>Valor</th><th>Pgto</th><th>Vc</th><th>Obs</th></tr></thead><tbody id="tB"></tbody></table></div></div>
+<div class="se"><div class="st">🔎 Auditoria</div><div class="ag"><div class="ai"><div class="al">Sist. Atual</div><div class="av" id="a1">0</div></div><div class="ai"><div class="al">Só Anterior</div><div class="av" id="a2">0</div></div><div class="ai"><div class="al">Unificada</div><div class="av" id="a3">0</div></div><div class="ai"><div class="al">PJ / PF</div><div class="av" id="a4">0</div></div></div></div>
+</div>
+<div class="to" id="tst"></div>
+<script>
+// === BASE COMPLETA UNIFICADA (369 clientes únicos por documento) ===
+// o:"a" = está no software atual | o:"x" = SÓ no sistema anterior
+// t:"PJ" ou "PF" | tel: telefone quando disponível
+const B=
+// ---- SOFTWARE ATUAL: PF ----
+[{r:"ALBERTO BORSETTO NETO",f:"",d:"745.680.948-87",t:"PF",o:"a"},
+{r:"NILTON RAZA E OUTRO",f:"",d:"262.233.258-00",t:"PF",o:"a"},
+{r:"Roberto Aparecido dos Santos",f:"",d:"020.525.378-48",t:"PF",o:"a"},
+{r:"SEBASTIAO FERREIRA MANDUCA NETO",f:"",d:"362.757.908-90",t:"PF",o:"a"},
+{r:"TELMA RUIZ SANCHEZ OLIVEIRA",f:"",d:"178.258.948-12",t:"PF",o:"a"},
+{r:"ADAIL MANZONI",f:"",d:"862.037.468-00",t:"PF",o:"a"},
+{r:"ADRIANO ROGERIO JANUZZI",f:"",d:"081.418.528-25",t:"PF",o:"a"},
+{r:"Albano Boschiero",f:"",d:"103.922.328-12",t:"PF",o:"a"},
+{r:"ALBINO QUARESMA PAROLO",f:"",d:"278.547.448-15",t:"PF",o:"a"},
+{r:"ALCEU VIOTO",f:"",d:"060.492.578-68",t:"PF",o:"a"},
+{r:"ALCIDES CARLOS DE OLIVEIRA",f:"",d:"066.063.608-54",t:"PF",o:"a"},
+{r:"Alcides dos Santos Moreira",f:"",d:"698.281.808-04",t:"PF",o:"a"},
+{r:"ALAIR APARECIDO BOTIGELLI",f:"",d:"042.270.018-54",t:"PF",o:"a"},
+{r:"ALTAMIRO BOSCOLI E OUTRO",f:"",d:"002.011.208-44",t:"PF",o:"a"},
+{r:"ANTONIO CARLOS CANO DIAS",f:"",d:"036.917.398-81",t:"PF",o:"a"},
+{r:"ANTONIO CARLOS DE CAIRES",f:"",d:"091.144.648-61",t:"PF",o:"a"},
+{r:"ANTONIO FRANCISCO DOS SANTOS FILHO",f:"",d:"156.860.008-91",t:"PF",o:"a"},
+{r:"ANTONIO SIMAO ABDUL NOUR",f:"",d:"062.517.908-06",t:"PF",o:"a"},
+{r:"Aparecido Soares",f:"",d:"396.320.918-68",t:"PF",o:"a"},
+{r:"ARI DE CAMPOS JUNIOR",f:"",d:"979.418.328-87",t:"PF",o:"a"},
+{r:"ARISTIDES SAYON FILHO",f:"",d:"661.297.108-87",t:"PF",o:"a"},
+{r:"ARLINDO GAION FILHO",f:"",d:"131.206.058-16",t:"PF",o:"a"},
+{r:"ARMINDO FIGUEIREDO DOS SANTOS",f:"",d:"262.232.798-68",t:"PF",o:"a"},
+{r:"BENEDITO DONIZETE PINTO",f:"",d:"083.305.998-09",t:"PF",o:"a"},
+{r:"Benedito Laerte de Souza",f:"",d:"161.614.678-87",t:"PF",o:"a"},
+{r:"Braz Geraldo Malaspina",f:"",d:"043.522.118-34",t:"PF",o:"a"},
+{r:"CASSIANO FABIO SALINA",f:"",d:"306.274.348-43",t:"PF",o:"a"},
+{r:"Claudio Menegues",f:"",d:"066.063.718-99",t:"PF",o:"a"},
+{r:"CLETO NAZARENO ANTONIO STOCCO",f:"",d:"198.583.708-06",t:"PF",o:"a"},
+{r:"Daniel da Cruz Ferreira Manduca",f:"",d:"314.879.688-84",t:"PF",o:"a"},
+{r:"DORIVAL FABRI",f:"",d:"550.150.268-20",t:"PF",o:"a"},
+{r:"EDSON JULIEN",f:"",d:"177.887.888-13",t:"PF",o:"a"},
+{r:"EDUARDO ANTONIO DELMUTTI",f:"",d:"138.725.268-20",t:"PF",o:"a"},
+{r:"Eduardo Cogo Abib",f:"",d:"285.912.238-96",t:"PF",o:"a"},
+{r:"EDUARDO ROSSI DA SILVA",f:"",d:"060.837.278-12",t:"PF",o:"a"},
+{r:"Eliana Maria de Barros",f:"",d:"058.937.118-58",t:"PF",o:"a"},
+{r:"ELPIDIO CARONI",f:"",d:"073.714.548-04",t:"PF",o:"a"},
+{r:"ESTEFANO ROBERTO FABRI",f:"",d:"065.452.688-56",t:"PF",o:"a"},
+{r:"FERNANDO AUGUSTO VALLERIO",f:"",d:"223.058.448-08",t:"PF",o:"a"},
+{r:"FLAVIA FREITAS PINTO FERREIRA",f:"",d:"273.721.418-18",t:"PF",o:"a"},
+{r:"FLAVIANO ADORNO DIAS",f:"",d:"293.449.238-92",t:"PF",o:"a"},
+{r:"Francisco Adalberto Cosin",f:"",d:"862.031.428-91",t:"PF",o:"a"},
+{r:"Frauzo Ruiz Sanches",f:"",d:"183.216.208-76",t:"PF",o:"a"},
+{r:"GERVALINO FLOIS",f:"",d:"624.135.898-72",t:"PF",o:"a"},
+{r:"GUILHERME DOS REIS INOCENTE",f:"",d:"404.687.598-40",t:"PF",o:"a"},
+{r:"Gustavo Carvalho dos Santos",f:"",d:"390.491.568-19",t:"PF",o:"a"},
+{r:"HERMES DOMINGOS MARCOM",f:"",d:"227.474.518-87",t:"PF",o:"a"},
+{r:"IVO CARDILI",f:"",d:"130.421.658-68",t:"PF",o:"a"},
+{r:"Jacqueline Regina Guedes",f:"",d:"409.039.298-56",t:"PF",o:"a"},
+{r:"Jair Santesso",f:"",d:"938.763.518-04",t:"PF",o:"a"},
+{r:"Jeferson Batista Silveira",f:"",d:"359.201.768-30",t:"PF",o:"a"},
+{r:"Joao Francisco Coletti",f:"",d:"020.479.758-67",t:"PF",o:"a"},
+{r:"Jorge Antonio Hildebrand Neto",f:"",d:"052.731.608-39",t:"PF",o:"a"},
+{r:"JOSE ANTONIO RUIZ SANCHES",f:"",d:"503.245.788-49",t:"PF",o:"a"},
+{r:"Jose Aparecido Silveira",f:"",d:"862.129.238-68",t:"PF",o:"a"},
+{r:"JOSE ARTUR MARTINELI",f:"",d:"047.022.858-07",t:"PF",o:"a"},
+{r:"JOSE CARLOS SANTESSO",f:"",d:"117.690.768-91",t:"PF",o:"a"},
+{r:"JOSE HENRIQUE DE PAULA",f:"",d:"082.667.548-45",t:"PF",o:"a"},
+{r:"Jose Luiz Najm Saade",f:"",d:"065.618.298-91",t:"PF",o:"a"},
+{r:"JOSE MARCO CREPALDI",f:"",d:"082.188.338-03",t:"PF",o:"a"},
+{r:"JOSE ROBERTO MALASPINA",f:"",d:"070.916.018-66",t:"PF",o:"a"},
+{r:"JOSE VALLERIO",f:"",d:"550.981.428-49",t:"PF",o:"a"},
+{r:"LAERCIO JOSE FABRI",f:"",d:"129.421.638-44",t:"PF",o:"a"},
+{r:"LEANDRO COGO ABIB",f:"",d:"150.838.848-28",t:"PF",o:"a"},
+{r:"LEONILDA MARQUESI COSTA",f:"",d:"033.132.988-34",t:"PF",o:"a"},
+{r:"LEONILDO ANGELUCCI FILHO",f:"",d:"075.990.798-66",t:"PF",o:"a"},
+{r:"LORIVAL GONÇALVES",f:"",d:"020.479.648-22",t:"PF",o:"a"},
+{r:"Lourdes Forlini Pinto",f:"",d:"129.216.068-36",t:"PF",o:"a"},
+{r:"LUCAS MUNERATO C. AMORIM",f:"",d:"355.873.068-28",t:"PF",o:"a"},
+{r:"LUIS HENRIQUE TORRES",f:"",d:"058.943.888-30",t:"PF",o:"a"},
+{r:"Luiz Augusto Milanesi",f:"",d:"377.688.678-15",t:"PF",o:"a"},
+{r:"MANUEL JORGE DE MARINS",f:"",d:"503.250.008-91",t:"PF",o:"a"},
+{r:"MARCELO CURY SAHAO",f:"",d:"472.585.949-49",t:"PF",o:"a"},
+{r:"Marcelo Lopes de Souza",f:"",d:"081.420.818-57",t:"PF",o:"a"},
+{r:"MARCELO LORENZETTO ARRUDA",f:"",d:"219.871.218-05",t:"PF",o:"a"},
+{r:"MARCIA ANTONIA SEMEGHINI",f:"",d:"292.994.978-34",t:"PF",o:"a"},
+{r:"MARCIO DE OLIVEIRA SOLER",f:"",d:"265.695.808-33",t:"PF",o:"a"},
+{r:"MARCIO DONIZETE AP. GRACIOLI",f:"",d:"195.397.928-94",t:"PF",o:"a"},
+{r:"MARCOS DANIEL RUARO",f:"",d:"252.549.008-81",t:"PF",o:"a"},
+{r:"Marcos Jose de Paula",f:"",d:"157.783.378-33",t:"PF",o:"a"},
+{r:"MARCOS SALLUM",f:"",d:"103.607.188-09",t:"PF",o:"a"},
+{r:"MARIA DE LOURDES MENEGUES",f:"",d:"051.842.668-87",t:"PF",o:"a"},
+{r:"Maria de Lourdes Vessoni R.",f:"",d:"743.531.958-91",t:"PF",o:"a"},
+{r:"Maria do Carmo Passanante",f:"",d:"160.419.328-09",t:"PF",o:"a"},
+{r:"MARIA ELIZABETE G. ARRUDA",f:"",d:"086.521.938-94",t:"PF",o:"a"},
+{r:"MARIA HELENA NASC. TOGNOLI",f:"",d:"225.778.588-68",t:"PF",o:"a"},
+{r:"MARIA IZILDINHA LUCINIO",f:"",d:"079.063.068-05",t:"PF",o:"a"},
+{r:"MARIA LUIZA MINZONI ROSSI",f:"",d:"156.186.478-18",t:"PF",o:"a"},
+{r:"MARIA LUIZA TREVISAN",f:"",d:"150.923.768-21",t:"PF",o:"a"},
+{r:"MARIA TERESA PRATAVIEIRA",f:"",d:"157.092.928-93",t:"PF",o:"a"},
+{r:"MARISELMA RUIZ CORREA PRADO",f:"",d:"272.121.958-80",t:"PF",o:"a"},
+{r:"MARISTELA DE OLIVEIRA",f:"",d:"250.128.038-50",t:"PF",o:"a"},
+{r:"MILTON COSTA",f:"",d:"075.025.838-15",t:"PF",o:"a"},
+{r:"NELSON PREVATO FILHO",f:"",d:"293.482.218-41",t:"PF",o:"a"},
+{r:"Neusa Fumico Fucano Kubata",f:"",d:"167.067.938-17",t:"PF",o:"a"},
+{r:"NILTON LUIS COLOMBO",f:"",d:"002.834.998-93",t:"PF",o:"a"},
+{r:"ODAIR RODRIGO VICENTIM",f:"",d:"258.834.308-21",t:"PF",o:"a"},
+{r:"OLDERIGUE B. DALL ACQUA",f:"",d:"930.511.668-04",t:"PF",o:"a"},
+{r:"OSMAR INNOCENTE",f:"",d:"033.104.698-91",t:"PF",o:"a"},
+{r:"OSWALDO ZANIN JUNIOR",f:"",d:"747.364.698-20",t:"PF",o:"a"},
+{r:"PASCHOAL ARAVECHIA",f:"",d:"130.286.938-87",t:"PF",o:"a"},
+{r:"PAULO CEZAR MULLER",f:"",d:"197.070.109-91",t:"PF",o:"a"},
+{r:"PEDRO SILVIO DE BAPTISTA",f:"",d:"306.825.848-00",t:"PF",o:"a"},
+{r:"RAFAEL SGARBI PINTO",f:"",d:"368.402.918-12",t:"PF",o:"a"},
+{r:"Roberto Kalil Issa",f:"",d:"374.193.078-49",t:"PF",o:"a"},
+{r:"SUELI ELISA C. MALASPINA",f:"",d:"405.600.748-91",t:"PF",o:"a"},
+{r:"VALDEMAR CARDILI",f:"",d:"660.574.348-20",t:"PF",o:"a"},
+{r:"VERA MARIA GERETTO CALDAS",f:"",d:"246.152.358-44",t:"PF",o:"a"},
+{r:"WALDEMAR FACIOLI FILHO",f:"",d:"012.076.938-71",t:"PF",o:"a"},
+// ---- SOFTWARE ATUAL: PJ ----
+{r:"SIMONE AP. RAMOS DA SILVA",f:"MARANATA ENXOVAIS",d:"57.887.031/0001-23",t:"PJ",o:"a"},
+{r:"DEBORA APARECIDA DA LUZ",f:"Salão Sempre Bella",d:"13.460.841/0001-23",t:"PJ",o:"a"},
+{r:"SOLANGE DOS SANTOS V. CAMPITELI",f:"",d:"20.923.150/0001-84",t:"PJ",o:"a"},
+{r:"SHIRLEY ROBERTA DE FRANCA SANTOS",f:"",d:"21.098.050/0001-23",t:"PJ",o:"a"},
+{r:"CRISTINA MARIA T. BERSANO VAL",f:"Bar do Beto",d:"21.990.260/0001-21",t:"PJ",o:"a"},
+{r:"ADAO APARECIDO DA SILVA",f:"DADO ENXOVAIS",d:"23.624.657/0001-25",t:"PJ",o:"a"},
+{r:"MARCIO RICARDO FRANCISCO",f:"Ct Warriors",d:"32.343.582/0001-03",t:"PJ",o:"a"},
+{r:"TAMARA CARDOSO DE OLIVEIRA",f:"CLUBINHO KIDS",d:"33.635.960/0001-87",t:"PJ",o:"a"},
+{r:"PATRICIA CRISTINA LUCIANO",f:"",d:"35.174.920/0001-00",t:"PJ",o:"a"},
+{r:"FABIO SIMOES DE OLIVEIRA",f:"IMPERIO DA FRUTA",d:"35.323.660/0001-98",t:"PJ",o:"a"},
+{r:"JESSICA KARINA SIQUEIRA GOMES",f:"",d:"39.543.356/0001-07",t:"PJ",o:"a"},
+{r:"DIEGO RICARDO ROSA",f:"",d:"40.853.856/0001-24",t:"PJ",o:"a"},
+{r:"ANA PAULA BIANCHI COTRIM",f:"ANNE HOUSE ENXOVAIS",d:"44.603.123/0001-92",t:"PJ",o:"a"},
+{r:"LEANDRO LUCAS JACOMELLO",f:"",d:"47.564.747/0001-36",t:"PJ",o:"a"},
+{r:"JAIR APARECIDO MARCOLIN",f:"",d:"49.417.535/0001-51",t:"PJ",o:"a"},
+{r:"MARILSA DE CARVALHO FERNANDES",f:"",d:"51.075.736/0001-60",t:"PJ",o:"a"},
+{r:"WILLIAN ARTUSO MORRE",f:"",d:"51.084.926/0001-43",t:"PJ",o:"a"},
+{r:"RAIMUNDA NONATA MARTINS ROCETI",f:"",d:"52.513.714/0001-05",t:"PJ",o:"a"},
+{r:"CAROLINE V. LAVERDI BUENO JACOMELLO",f:"",d:"52.813.997/0001-00",t:"PJ",o:"a"},
+{r:"RODRIGO ALVES DIAS",f:"RR Embalagens",d:"53.351.370/0001-30",t:"PJ",o:"a"},
+{r:"ISA HELENA FELIPE DE SOUZA",f:"CASA LOREN ENXOVAIS",d:"53.790.995/0001-06",t:"PJ",o:"a"},
+{r:"DOUGLAS GIANSANTE VIEIRA",f:"IMPERIO DA FRUTA 2",d:"53.870.140/0001-87",t:"PJ",o:"a"},
+{r:"ALEXANDRE LADEIRA",f:"",d:"53.942.204/0001-08",t:"PJ",o:"a"},
+{r:"THAIS FELIX DA SILVA",f:"",d:"55.397.241/0001-08",t:"PJ",o:"a"},
+{r:"A L G DA SILVA",f:"De Luiz Massas",d:"26.934.915/0001-68",t:"PJ",o:"a"},
+{r:"A P DE AMORIM RAMOS",f:"",d:"47.708.635/0001-01",t:"PJ",o:"a"},
+{r:"A. L. I EMBALAGENS LTDA",f:"BELLA EMBALAGENS",d:"11.803.183/0001-08",t:"PJ",o:"a"},
+{r:"ACOUGUE BELA VISTA SUL",f:"",d:"52.480.868/0001-30",t:"PJ",o:"a"},
+{r:"ADELINE AP. SIQUEIRA RONCADA",f:"",d:"44.965.486/0001-78",t:"PJ",o:"a"},
+{r:"ADEMILSON JOSE GARRIDO PEREIRA",f:"MINIMERCADO PEGA-PEGA",d:"34.884.066/0001-03",t:"PJ",o:"a"},
+{r:"ADRIANA MENDONCA ALCANTARA",f:"",d:"17.532.313/0001-93",t:"PJ",o:"a"},
+{r:"AGROPECUARIA SAO JOAO",f:"",d:"06.055.976/0001-48",t:"PJ",o:"a"},
+{r:"AKIYAMA ENXOVAIS LTDA",f:"AKIYAMA ENXOVAIS",d:"52.254.395/0001-52",t:"PJ",o:"a"},
+{r:"ALENCAR RAMOS DOS PASSOS TRANSP.",f:"GK TRANSPORTES",d:"31.699.885/0001-92",t:"PJ",o:"a"},
+{r:"ALEX RIBEIRO DOS SANTOS",f:"",d:"25.901.175/0001-09",t:"PJ",o:"a"},
+{r:"ALLANA CASA ENXOVAIS",f:"ALLANA CASA",d:"60.100.293/0001-00",t:"PJ",o:"a"},
+{r:"ANGEL DISTRIBUIDORA",f:"ANGEL DISTRIBUIDORA",d:"30.052.990/0001-72",t:"PJ",o:"a"},
+{r:"ANILTON ALVES DOS SANTOS",f:"AMC CONFECCOES",d:"23.187.733/0001-82",t:"PJ",o:"a"},
+{r:"ANTONIO MARCOS MARTINELLI",f:"",d:"15.841.020/0001-62",t:"PJ",o:"a"},
+{r:"ARIEL FELIPE NEVES PIRES",f:"FANTASTICA BORDADOS",d:"38.497.499/0001-67",t:"PJ",o:"a"},
+{r:"ARMINDA RAMOS DE LIMA",f:"BORDADOS LIMA",d:"62.874.037/0001-04",t:"PJ",o:"a"},
+{r:"ARQUITETURA DO ENXOVAL",f:"ARQUITETURA DO ENXOVAL",d:"50.235.432/0001-50",t:"PJ",o:"a"},
+{r:"ARTE & TEAR COM. ONLINE",f:"ARTE & TEAR",d:"32.020.536/0001-65",t:"PJ",o:"a"},
+{r:"ARTHA CASA E DECORACAO",f:"RAINHA DO ENXOVAL",d:"40.943.062/0001-51",t:"PJ",o:"a"},
+{r:"ASSOC. COM. IND. IBITINGA",f:"ACI IBITINGA",d:"47.042.932/0001-60",t:"PJ",o:"a"},
+{r:"ATACADAO RICHARD",f:"ATACADAO RICHARD",d:"33.308.456/0001-72",t:"PJ",o:"a"},
+{r:"AUTO ELETRICA YOSHIOKA",f:"AUTO ELETRICA AVENIDA",d:"11.796.332/0001-40",t:"PJ",o:"a"},
+{r:"B.H. CONFECCOES (Matriz)",f:"B.H. CONFECCOES",d:"00.480.543/0001-53",t:"PJ",o:"a"},
+{r:"B.H. CONFECCOES (Filial)",f:"B.H. CONFECCOES",d:"00.480.543/0003-15",t:"PJ",o:"a"},
+{r:"BADU ENXOVAIS LTDA",f:"BADU ENXOVAIS",d:"53.647.922/0001-51",t:"PJ",o:"a"},
+{r:"BARBARA ROMERO ALTARECO",f:"OUTBAR",d:"35.810.707/0001-48",t:"PJ",o:"a"},
+{r:"BEATRIZ DE L. C. DA SILVA",f:"TOQUE MAGICO",d:"07.312.024/0001-25",t:"PJ",o:"a"},
+{r:"BELLA EMBALAGENS IND.",f:"BELA EMBALAGENS",d:"30.360.677/0001-00",t:"PJ",o:"a"},
+{r:"BELLISSIMA CASA ENXOVAIS",f:"BELLISSIMA",d:"34.772.237/0001-02",t:"PJ",o:"a"},
+{r:"BENEDITA APARECIDA FRANCO",f:"",d:"28.173.222/0001-25",t:"PJ",o:"a"},
+{r:"BLESSA TRICOT E CROCHE",f:"BLESSA",d:"01.369.314/0001-29",t:"PJ",o:"a"},
+{r:"BRAGA CONFECCOES IBITINGA",f:"BRAGA CONFECCOES",d:"46.036.162/0001-80",t:"PJ",o:"a"},
+{r:"BRUNO ALEXANDRE DA SILVA",f:"BRUNO ENXOVAIS",d:"19.755.181/0001-94",t:"PJ",o:"a"},
+{r:"BUENO ENXOVAIS LTDA",f:"Bueno Enxovais",d:"54.348.659/0001-62",t:"PJ",o:"a"},
+{r:"CASA SANCHEZ ENXOVAIS",f:"CASA SANCHEZ",d:"26.153.020/0001-96",t:"PJ",o:"a"},
+{r:"CASSIA AP. MANZONI GOUVEIA",f:"BARATAO ENXOVAIS",d:"26.883.537/0001-30",t:"PJ",o:"a"},
+{r:"CLAUDEMIR PEREIRA",f:"ROTISSERIE BONA APETIT",d:"20.852.879/0001-07",t:"PJ",o:"a"},
+{r:"CLAUDINHO BEBIDAS",f:"CLAUDINHO BEBIDAS",d:"63.337.459/0001-03",t:"PJ",o:"a"},
+{r:"CLAUDIO ROBERTO COLOMBO",f:"ACONCHEGO BABY",d:"10.698.037/0001-99",t:"PJ",o:"a"},
+{r:"CLAUDOVINO F. DE OLIVEIRA",f:"AMERICA SORVETES",d:"27.153.992/0001-43",t:"PJ",o:"a"},
+{r:"CLELIA AP. GALACINI",f:"Casa dos Parafusos",d:"04.415.859/0001-12",t:"PJ",o:"a"},
+{r:"CLINICA ODONT. TRAMONTINA",f:"Clinica Tramontina",d:"43.875.854/0001-24",t:"PJ",o:"a"},
+{r:"CLUBE DOS BANCARIOS",f:"CLUBE DOS BANCARIOS",d:"45.320.702/0001-90",t:"PJ",o:"a"},
+{r:"CONFECCOES OLIVEIRA",f:"ENXOVAIS OLIVEIRA",d:"01.145.562/0001-96",t:"PJ",o:"a"},
+{r:"D J MARGADONA",f:"CASA LUXO",d:"46.868.694/0001-84",t:"PJ",o:"a"},
+{r:"DALVA PINTO BASTOS GARCIA",f:"Blessa",d:"01.190.815/0001-43",t:"PJ",o:"a"},
+{r:"DANIEL BARROS CONTENTE",f:"VET. CAOTENTE",d:"29.498.747/0001-01",t:"PJ",o:"a"},
+{r:"DANIELA CASSIA DRUZIAN",f:"VALENTE CASA & DECOR",d:"37.855.048/0001-91",t:"PJ",o:"a"},
+{r:"DAVID FARMACIA MANIPULACAO",f:"ANAFARMA",d:"08.882.768/0001-48",t:"PJ",o:"a"},
+{r:"DEBORA & CIA ALMOFADAS",f:"DEBORA & CIA",d:"27.162.567/0001-10",t:"PJ",o:"a"},
+{r:"DECOR CORTINAS",f:"DECOR CORTINAS",d:"34.001.504/0001-48",t:"PJ",o:"a"},
+{r:"DIRCEU BATISTA",f:"",d:"29.905.136/0001-22",t:"PJ",o:"a"},
+{r:"DL MAGAZINE",f:"DL MAGAZINE",d:"38.493.653/0001-22",t:"PJ",o:"a"},
+{r:"DONA DELICADA ENXOVAIS",f:"DONA DELICADA",d:"52.922.019/0001-99",t:"PJ",o:"a"},
+{r:"DOUGLAS WILIANS DA SILVA",f:"Ibicar",d:"30.398.183/0001-06",t:"PJ",o:"a"},
+{r:"DURVALINO BETINI",f:"",d:"27.549.908/0001-05",t:"PJ",o:"a"},
+{r:"DYNASTIA ENXOVAIS",f:"DYNASTIA",d:"43.923.048/0001-84",t:"PJ",o:"a"},
+{r:"ECOLUMA COM. REP.",f:"ECOLUMA",d:"38.305.160/0001-11",t:"PJ",o:"a"},
+{r:"EDISON RODRIGUES IBITINGA",f:"",d:"03.433.797/0001-09",t:"PJ",o:"a"},
+{r:"EDSON LENHARO JUNIOR",f:"",d:"06.259.033/0001-37",t:"PJ",o:"a"},
+{r:"EDUARDO FIGUEIREDO VITOR",f:"EVI DECOR",d:"19.903.873/0001-32",t:"PJ",o:"a"},
+{r:"ELIZABETE DE MORAIS",f:"LOJA DA BETE",d:"00.015.304/0001-22",t:"PJ",o:"a"},
+{r:"ELIZANDRA MOUTINHO",f:"IZILDINHA MIX CENTER",d:"11.065.508/0001-94",t:"PJ",o:"a"},
+{r:"ENGEPRAS ENGENHARIA",f:"ENGEPRAS",d:"14.900.861/0001-30",t:"PJ",o:"a"},
+{r:"ENXOVAIS DECORA LAR",f:"DECORA LAR",d:"41.171.347/0001-84",t:"PJ",o:"a"},
+{r:"EVANDRO ESTEVES DE MELLO",f:"",d:"18.976.896/0001-04",t:"PJ",o:"a"},
+{r:"EVERTON JOSE CATHARIN",f:"ENXOVAIS SOFIA",d:"23.186.891/0001-18",t:"PJ",o:"a"},
+{r:"EXCELLENT AUTO POSTO",f:"EXCELLENT AUTO POSTO",d:"49.274.194/0001-02",t:"PJ",o:"a"},
+{r:"EXCELLENT SHOP CONVENIENCIA",f:"EXCELLENT SHOP",d:"10.460.973/0001-67",t:"PJ",o:"a"},
+{r:"FABIANA LEITE RECIO",f:"BEAF",d:"13.709.021/0001-22",t:"PJ",o:"a"},
+{r:"FABIO AGNALDO DE GOUVEIA",f:"Pinta e Borda",d:"13.627.133/0001-34",t:"PJ",o:"a"},
+{r:"FEFFO PACK EMBALAGENS",f:"FEFFOPACK",d:"45.393.473/0001-34",t:"PJ",o:"a"},
+{r:"FERNANDA PALMEZAN TOMAZ",f:"MARIAS ENXOVAL",d:"25.354.116/0001-50",t:"PJ",o:"a"},
+{r:"FERNANDO RODRIGUES DIAS TRANSP.",f:"DIAS TRANSPORTES",d:"17.464.336/0001-08",t:"PJ",o:"a"},
+{r:"FERRARI & SCARPIM",f:"FERRARI & SCARPIM",d:"01.484.089/0001-71",t:"PJ",o:"a"},
+{r:"FILOMENA CORTINAS",f:"FILOMENA CORTINAS",d:"35.975.469/0001-20",t:"PJ",o:"a"},
+{r:"FN CASA LTDA",f:"FN CASA ENXOVAIS",d:"46.084.105/0001-77",t:"PJ",o:"a"},
+{r:"FUTURAPACK EMBALAGENS",f:"FUTURAPACK",d:"14.960.516/0001-92",t:"PJ",o:"a"},
+{r:"GABRIEL BIANCHINI DA SILVA",f:"GG Transportes",d:"21.946.653/0001-38",t:"PJ",o:"a"},
+{r:"GABRIELI FRANCINI TROMBINI",f:"GABI ENXOVAIS",d:"41.713.015/0001-84",t:"PJ",o:"a"},
+{r:"GLOBAL EXPERT ASSESSORIA",f:"GLOBAL EXPERT",d:"56.936.426/0001-06",t:"PJ",o:"a"},
+{r:"GODOY DESPACHANTE",f:"DESPACHANTE SCALLA",d:"43.529.628/0001-91",t:"PJ",o:"a"},
+{r:"GONCALVES & GONCALVES BEBIDAS",f:"JL Bebidas",d:"08.176.426/0001-02",t:"PJ",o:"a"},
+{r:"GRANPLASTIC LTDA",f:"Horem Embalagens",d:"01.145.554/0001-40",t:"PJ",o:"a"},
+{r:"IBIACO CARRINHOS",f:"IBIACO",d:"47.898.274/0001-03",t:"PJ",o:"a"},
+{r:"IBITINGA BRASIL TRANSPORTES",f:"",d:"11.226.634/0001-83",t:"PJ",o:"a"},
+{r:"IBITINGA TRANSPORTES",f:"IBITINGA TRANSPORTES",d:"49.846.247/0001-12",t:"PJ",o:"a"},
+{r:"IND. COM. ENXOVAIS GONCALVES",f:"BORDADOS GONCALVES",d:"01.027.204/0001-89",t:"PJ",o:"a"},
+{r:"INDUSTRIA TEXTIL RAPHURY",f:"",d:"66.784.828/0001-96",t:"PJ",o:"a"},
+{r:"INNOVA TECNOLOGIA",f:"INNOVA",d:"03.369.875/0001-53",t:"PJ",o:"a"},
+{r:"IRINEU DURCI MAT. CONSTRUCAO",f:"",d:"65.834.319/0001-68",t:"PJ",o:"a"},
+{r:"IZILDINHA AP. LOURENCO FERRARI",f:"",d:"00.549.251/0001-20",t:"PJ",o:"a"},
+{r:"J. DE LUIZ IBITINGA",f:"Casa do Construtor",d:"03.381.550/0001-96",t:"PJ",o:"a"},
+{r:"JANAINA AP. RODRIGUES",f:"Bela Arte",d:"13.646.056/0001-60",t:"PJ",o:"a"},
+{r:"JEPOLI CONFECCOES",f:"JEPOLI",d:"42.353.927/0001-55",t:"PJ",o:"a"},
+{r:"JESSICA TASSI BORGES RONCADA",f:"JR VARIEDADES",d:"42.474.671/0001-34",t:"PJ",o:"a"},
+{r:"JOAO GERALDO MILANEZI",f:"SEMPRE VIVA",d:"59.211.839/0001-11",t:"PJ",o:"a"},
+{r:"JOAO TONETTO NETO",f:"CORTINAS IBITINGA",d:"27.240.197/0001-92",t:"PJ",o:"a"},
+{r:"JORGE DOS SANTOS LIRA",f:"JRP CLIMATIZADORES",d:"32.443.184/0001-50",t:"PJ",o:"a"},
+{r:"JOSE LUIS DE OLIVEIRA CESAR",f:"",d:"19.859.219/0001-79",t:"PJ",o:"a"},
+{r:"JOSE RAMIRO STUCHI",f:"ARTE & TEAR",d:"15.292.799/0001-04",t:"PJ",o:"a"},
+{r:"JOSIMARA AP. COSTA",f:"ESPACO CASA ENXOVAIS",d:"31.646.226/0001-98",t:"PJ",o:"a"},
+{r:"JULIANO LUIZ AMBROSIO",f:"DNA Maquinas",d:"14.914.686/0001-30",t:"PJ",o:"a"},
+{r:"JULIO MARTINS VELOSO",f:"GLENDA ENXOVAIS",d:"44.770.290/0001-28",t:"PJ",o:"a"},
+{r:"L DOS REIS CASTRO",f:"",d:"11.539.284/0001-05",t:"PJ",o:"a"},
+{r:"LARA TAPETES E DEC.",f:"LARA TAPETES",d:"62.165.614/0001-80",t:"PJ",o:"a"},
+{r:"LARISSA SCAQUETTI",f:"DROGARIA AVENIDA",d:"09.423.199/0001-35",t:"PJ",o:"a"},
+{r:"LATU MAGAZINE",f:"LATU MAGAZINE",d:"49.647.844/0001-18",t:"PJ",o:"a"},
+{r:"LEANDRO CESAR DE SOUZA",f:"VET. PRONTOVET",d:"12.059.948/0001-00",t:"PJ",o:"a"},
+{r:"LENHARO ENXOVAIS",f:"LENHARO ENXOVAIS",d:"15.706.699/0001-87",t:"PJ",o:"a"},
+{r:"LEONARDO CELIO MARIA",f:"ANDRADE ENXOVAIS",d:"20.975.054/0001-80",t:"PJ",o:"a"},
+{r:"LEONARDO MACHADO",f:"LEO ENXOVAIS",d:"37.773.244/0001-17",t:"PJ",o:"a"},
+{r:"LIMPERFEITA SOLUCOES",f:"LIMPERFEITA",d:"38.287.428/0001-30",t:"PJ",o:"a"},
+{r:"LJGS CONSTRUTORA",f:"LJGS",d:"22.333.315/0001-93",t:"PJ",o:"a"},
+{r:"LOPES & LOPES ENXOVAIS",f:"L & N ENXOVAIS",d:"11.480.228/0001-42",t:"PJ",o:"a"},
+{r:"LUCAS COSIN LTDA",f:"LCOSIN EMBALAGENS",d:"07.026.741/0001-90",t:"PJ",o:"a"},
+{r:"LUFRAPEL COM. IND.",f:"LUFRAPEL",d:"09.603.227/0001-04",t:"PJ",o:"a"},
+{r:"LUGUI ENXOVAIS",f:"LUGUI ENXOVAIS",d:"48.511.561/0001-81",t:"PJ",o:"a"},
+{r:"LUIZ FELIPE COTRIM",f:"LF ENXOVAIS",d:"38.162.705/0001-88",t:"PJ",o:"a"},
+{r:"LUIZ HENRIQUE MOREIRA ENX.",f:"LH ENXOVAIS",d:"36.666.037/0001-09",t:"PJ",o:"a"},
+{r:"LUMI INDUSTRIA TEXTIL",f:"LUMI",d:"23.420.769/0001-64",t:"PJ",o:"a"},
+{r:"MACEDO CONSTRUTORA",f:"MACEDO",d:"57.462.290/0001-02",t:"PJ",o:"a"},
+{r:"MANIBI ALIMENTOS (Filial)",f:"MANIBI FILIAL",d:"12.517.324/0003-42",t:"PJ",o:"a"},
+{r:"MANIBI ALIMENTOS (Matriz)",f:"Manibi",d:"12.517.324/0001-80",t:"PJ",o:"a"},
+{r:"MARCIO KALAF MALASPINA",f:"CASA ALVORADA",d:"54.554.787/0001-62",t:"PJ",o:"a"},
+{r:"MARCIA AP. DA SILVA",f:"",d:"37.489.240/0001-01",t:"PJ",o:"a"},
+{r:"MARCOS E JANE COM. FOTOG.",f:"MARCOS FOTO",d:"08.416.961/0001-93",t:"PJ",o:"a"},
+{r:"MARCOS JANERILO ADVOCACIA",f:"MARCOS JANERILO",d:"49.356.906/0001-32",t:"PJ",o:"a"},
+{r:"MARTINEZ SGARBI & CIA.",f:"MARTINEZ SGARBI",d:"14.516.882/0001-57",t:"PJ",o:"a"},
+{r:"MEIRE LEVORATO PEREZ",f:"JASMIM ENXOVAIS",d:"32.871.132/0001-85",t:"PJ",o:"a"},
+{r:"MERCADAO DOS ENXOVAIS",f:"MERCADAO ENXOVAIS",d:"24.118.780/0001-37",t:"PJ",o:"a"},
+{r:"MERCADO SANTO EXPEDITO",f:"",d:"53.288.624/0001-12",t:"PJ",o:"a"},
+{r:"MH IND. COM. ENXOVAIS",f:"MH ENXOVAIS",d:"32.028.470/0001-50",t:"PJ",o:"a"},
+{r:"MICHEL SANTOS DE CARVALHO",f:"GUI TRANSPORTES",d:"44.779.005/0001-30",t:"PJ",o:"a"},
+{r:"MICHELE ROSANTE PEREIRA",f:"LORENA DECORACOES",d:"41.617.299/0001-05",t:"PJ",o:"a"},
+{r:"MINIMERCADO NACOES UNIDAS",f:"MINI MERCADO",d:"02.607.181/0001-44",t:"PJ",o:"a"},
+{r:"MIRC ADM IMOBILIARIA",f:"MIRC ADM",d:"56.944.196/0001-27",t:"PJ",o:"a"},
+{r:"MISAEL PRUDENCIANO OLIVEIRA",f:"Linda Casa Enxovais",d:"28.474.081/0001-80",t:"PJ",o:"a"},
+{r:"MODERN HOME MOVEIS",f:"MODERN HOME",d:"21.258.813/0001-56",t:"PJ",o:"a"},
+{r:"N. ALVARES CONTABILIDADE",f:"ESCRITORIO SCALLA",d:"24.650.882/0001-07",t:"PJ",o:"a"},
+{r:"N.L.TRANSPORTES",f:"N.L.TRANSPORTES",d:"13.532.664/0001-43",t:"PJ",o:"a"},
+{r:"NADIMAR EMBALAGENS",f:"EMB. NADIMAR",d:"01.492.168/0001-24",t:"PJ",o:"a"},
+{r:"NILTON RICARDO TOTA",f:"BELLA CASA DEC.",d:"44.987.018/0001-02",t:"PJ",o:"a"},
+{r:"ORTO HAPPY SERVICOS",f:"ORTO COMPANY",d:"13.037.415/0001-81",t:"PJ",o:"a"},
+{r:"PALONE GASTROBAR",f:"PALONE",d:"13.824.139/0001-00",t:"PJ",o:"a"},
+{r:"PAMELLA GABRIELA ALTAREIJO",f:"FEFFO CORTINAS",d:"27.401.802/0001-60",t:"PJ",o:"a"},
+{r:"PATRICIA SCHUMANN",f:"PATYRO",d:"30.495.885/0001-08",t:"PJ",o:"a"},
+{r:"PAULO HENRIQUE BIANCHINI",f:"PAHEBI TRANSPORTES",d:"21.944.246/0001-91",t:"PJ",o:"a"},
+{r:"PEDRO IVO COTRIM GONCALVES",f:"COTRIM CONFECCOES",d:"30.765.015/0001-01",t:"PJ",o:"a"},
+{r:"PET HOME COM. ENXOVAIS",f:"PET HOME",d:"45.838.047/0001-67",t:"PJ",o:"a"},
+{r:"PLANALTO CLUBE DE CAMPO",f:"PLANALTO CLUBE",d:"49.275.233/0001-96",t:"PJ",o:"a"},
+{r:"RAFAEL AP. LIMA MARCELLINO",f:"CLIKE DECORE",d:"35.608.804/0001-52",t:"PJ",o:"a"},
+{r:"RENAN DE CARVALHO",f:"A B C EMBALAGENS",d:"23.253.228/0001-99",t:"PJ",o:"a"},
+{r:"RICARDO VILELA ASSESSORIA",f:"RV ASSESSORIA",d:"17.461.060/0001-04",t:"PJ",o:"a"},
+{r:"RICARDO VILELA EQUIP.",f:"RV EQUIPAMENTOS",d:"53.316.987/0001-14",t:"PJ",o:"a"},
+{r:"RONEY AP. COLLEONE",f:"COLLEONE ENXOVAIS",d:"29.935.762/0001-61",t:"PJ",o:"a"},
+{r:"RR SGARBI FARMACIA",f:"Farm. N.S. Aparecida",d:"08.798.320/0001-40",t:"PJ",o:"a"},
+{r:"SAIRA ISAAC DOS SANTOS",f:"JS CONFECCOES",d:"45.873.741/0001-15",t:"PJ",o:"a"},
+{r:"SAMUEL ABRAHAO COM. VEST.",f:"JK.SHOP.EXPRESS",d:"35.863.788/0001-44",t:"PJ",o:"a"},
+{r:"SAMUEL ANTONIO RODRIGUES",f:"MERCADO PRECO BOM",d:"53.400.870/0001-14",t:"PJ",o:"a"},
+{r:"SANDRA CRISTINA BARBOSA",f:"RS TRANSPORTES",d:"33.223.297/0001-03",t:"PJ",o:"a"},
+{r:"SANDRA MARA PIRES CAMARGO",f:"MINI MERCADO AMORIM",d:"02.242.960/0001-93",t:"PJ",o:"a"},
+{r:"SAO FRANCISCO SHOPPING HOTEL",f:"",d:"01.419.689/0001-56",t:"PJ",o:"a"},
+{r:"SINDICATO RURAL BORBOREMA",f:"",d:"50.514.421/0001-09",t:"PJ",o:"a"},
+{r:"SINDICATO RURAL IBITINGA",f:"",d:"49.274.780/0001-57",t:"PJ",o:"a"},
+{r:"SINGELAR MAQUINAS",f:"SINGELAR",d:"09.048.435/0001-80",t:"PJ",o:"a"},
+{r:"SOUZA IND. ENXOVAIS BEBE",f:"CASA BABY",d:"30.700.576/0001-22",t:"PJ",o:"a"},
+{r:"TALITA DAYANE DA SILVA",f:"ADEGA DO CAMPO",d:"51.726.815/0001-93",t:"PJ",o:"a"},
+{r:"TAMIRES XAVIER FREITAS",f:"MUIS VARIEDADES",d:"39.506.903/0001-84",t:"PJ",o:"a"},
+{r:"TEODORO ALVES & ALVES",f:"CORREA SUPERMERCADO",d:"06.229.726/0001-87",t:"PJ",o:"a"},
+{r:"TIAGO H. SANTOS SILVA EMB.",f:"PRIMEIRA LINHA EMB.",d:"44.153.215/0001-18",t:"PJ",o:"a"},
+{r:"VALDECI NOVELLI THEODORO",f:"CONTNET",d:"23.638.991/0001-38",t:"PJ",o:"a"},
+{r:"VALDECIR MALAQUIAS",f:"BIRAO ENXOVAIS",d:"03.210.798/0001-94",t:"PJ",o:"a"},
+{r:"VALDECIR ROBERTO GALLO",f:"ELETRONICA VIDEOSOM",d:"58.585.340/0001-01",t:"PJ",o:"a"},
+{r:"VANTUIR DE OLIVEIRA",f:"REST. BOSQUE II",d:"05.841.352/0001-93",t:"PJ",o:"a"},
+{r:"VITRO MAT. CONSTRUCAO",f:"CASA VITRO",d:"09.175.674/0001-00",t:"PJ",o:"a"},
+{r:"VIVA ENXOVAIS LTDA",f:"VIVA ENXOVAIS",d:"36.564.986/0001-70",t:"PJ",o:"a"},
+{r:"WAGNER EVANGELISTA DA SILVA",f:"",d:"10.610.799/0001-91",t:"PJ",o:"a"},
+{r:"WELLINGTON DE CAMPOS GOMES",f:"MARILU TEXTIL",d:"52.182.381/0001-70",t:"PJ",o:"a"},
+{r:"WILSON GOMES DO PINHO",f:"CASTELINHO S BAR",d:"30.999.166/0001-24",t:"PJ",o:"a"},
+{r:"WIRIS MARQUES DOS SANTOS",f:"RPS REFRIGERACAO",d:"23.990.263/0001-90",t:"PJ",o:"a"},
+{r:"ZOLBEIDE & BARBUI",f:"DOCARIA DA SONIA",d:"27.804.882/0001-02",t:"PJ",o:"a"},
+{r:"DANIELA HENRIQUE DE CAMPOS",f:"",d:"37.057.905/0001-08",t:"PJ",o:"a"},
+{r:"ESTANCIA MAT. CONSTRUCAO",f:"",d:"02.492.719/0001-12",t:"PJ",o:"a"},
+{r:"MARIA LUANA VILELA RAMOS",f:"",d:"17.746.369/0001-40",t:"PJ",o:"a"},
+{r:"MARILZA CUSIN ME",f:"",d:"13.766.722/0001-01",t:"PJ",o:"a"},
+{r:"LEANDRO DE MORAES RECIO",f:"",d:"18.232.853/0001-14",t:"PJ",o:"a"},
+{r:"JOAO MATHEUS MORAIS BERNARDI",f:"",d:"25.110.178/0001-16",t:"PJ",o:"a"},
+{r:"ISABELLI CERRI ABONIZIO",f:"",d:"37.570.635/0001-34",t:"PJ",o:"a"},
+{r:"D & D COSTELARIA",f:"D & D COSTELARIA",d:"55.552.345/0001-40",t:"PJ",o:"a"},
+{r:"BRUNA MAINARDES MARCENARIA",f:"",d:"29.295.439/0001-70",t:"PJ",o:"a"},
+{r:"EMPORIO DAS EMBALAGENS",f:"",d:"32.710.361/0001-18",t:"PJ",o:"a"},
+// ---- SÓ NO SISTEMA ANTERIOR (não existe no atual) ----
+{r:"ACO ALIMENTOS",f:"Aco Alimentos",d:"08.659.983/0001-84",t:"PJ",o:"x"},
+{r:"AGUAPE EMPREENDIMENTOS",f:"Aguape",d:"37.995.246/0001-50",t:"PJ",o:"x"},
+{r:"AL CONFECCOES",f:"Al Confeccoes",d:"36.144.762/0001-09",t:"PJ",o:"x"},
+{r:"ALAMBIQUE ITAPOLIS",f:"",d:"04.163.213/0001-95",t:"PJ",o:"x"},
+{r:"ALESSANDRO DOMINGOS",f:"",d:"394.778.908-47",t:"PF",o:"x"},
+{r:"ALICERSE EMPREENDIMENTOS",f:"",d:"37.931.604/0001-61",t:"PJ",o:"x"},
+{r:"ANTONIO CARLOS ROSSI",f:"",d:"064.130.878-56",t:"PF",o:"x"},
+{r:"ANTONIO ERISVALDO ARAUJO",f:"",d:"859.847.103-82",t:"PF",o:"x"},
+{r:"ANTONIO SANTORO",f:"",d:"645.401.208-13",t:"PF",o:"x"},
+{r:"AUTO ESCOLA ESTRELA",f:"",d:"47.043.195/0001-10",t:"PJ",o:"x"},
+{r:"AUTO ESCOLA LAZARINI",f:"",d:"17.657.907/0001-20",t:"PJ",o:"x"},
+{r:"AUTO ESCOLA LEAO",f:"",d:"10.688.863/0001-57",t:"PJ",o:"x"},
+{r:"BASICO MANIA",f:"Basico Mania",d:"10.229.563/0001-00",t:"PJ",o:"x"},
+{r:"BETHA ROUPAS E ACESSORIOS",f:"Betha Roupas",d:"33.200.993/0001-02",t:"PJ",o:"x"},
+{r:"BOUTIQUE MODA EXCLUSIVA",f:"Dudalina",d:"39.737.158/0001-84",t:"PJ",o:"x"},
+{r:"CAMARA MUNICIPAL IBITINGA",f:"",d:"72.918.782/0001-53",t:"PJ",o:"x"},
+{r:"CARLOS EDUARDO FONSECA",f:"",d:"53.816.608/0001-55",t:"PJ",o:"x"},
+{r:"CASA E PET",f:"",d:"29.424.839/0001-39",t:"PJ",o:"x"},
+{r:"CASA LATU MAGAZINE",f:"Casa Latu",d:"51.534.843/0001-09",t:"PJ",o:"x"},
+{r:"CASA TEX INDUSTRIA",f:"Casa Tex",d:"52.286.476/0001-34",t:"PJ",o:"x"},
+{r:"CASTELAR CONFECCOES",f:"Castelar",d:"43.589.501/0001-68",t:"PJ",o:"x"},
+{r:"CGL MATERIAIS ELETRICOS",f:"CGL",d:"64.503.279/0001-09",t:"PJ",o:"x"},
+{r:"CHALATO BAR E HOSPEDARIA",f:"",d:"53.484.259/0001-11",t:"PJ",o:"x"},
+{r:"CHAVEIRO AMERICA",f:"",d:"35.962.207/0001-21",t:"PJ",o:"x"},
+{r:"CONSTRUCOES RBC",f:"",d:"24.556.802/0001-40",t:"PJ",o:"x"},
+{r:"CONSTRUFORTE",f:"Construforte",d:"37.056.460/0001-41",t:"PJ",o:"x"},
+{r:"COSTA & SILVA",f:"",d:"27.672.332/0001-79",t:"PJ",o:"x"},
+{r:"DOURADOS ENXOVAIS",f:"Dourados Enxovais",d:"21.491.497/0001-68",t:"PJ",o:"x"},
+{r:"EXPRESSO CRISTALIA",f:"Expresso Cristalia",d:"13.671.713/0001-29",t:"PJ",o:"x"},
+{r:"FERNANDO JOSE SANTESSO",f:"",d:"10.648.393/0001-06",t:"PJ",o:"x"},
+{r:"FERRARI SCARPIM (Filial)",f:"",d:"04.657.695/0001-30",t:"PJ",o:"x"},
+{r:"FORTEX",f:"Fortex",d:"06.140.532/0001-00",t:"PJ",o:"x"},
+{r:"GI JALECOS",f:"Gi Jalecos",d:"47.126.477/0001-81",t:"PJ",o:"x"},
+{r:"GIULIA ENXOVAIS",f:"Giulia Enxovais",d:"40.246.752/0001-51",t:"PJ",o:"x"},
+{r:"GRAN MORATTA",f:"Gran Moratta",d:"28.124.805/0001-66",t:"PJ",o:"x"},
+{r:"GREEN CERVEJA E CIA",f:"Green Cerveja",d:"32.887.451/0001-89",t:"PJ",o:"x"},
+{r:"GUGA TAPETES E ENXOVAIS",f:"Guga Tapetes",d:"53.507.927/0001-89",t:"PJ",o:"x"},
+{r:"HOMETEX IMPORT (Matriz)",f:"Hometex",d:"55.971.843/0001-27",t:"PJ",o:"x"},
+{r:"HOMETEX IMPORT (Filial)",f:"Hometex",d:"55.971.843/0002-08",t:"PJ",o:"x"},
+{r:"J. V. BORDADOS",f:"J.V. Bordados",d:"11.662.829/0002-57",t:"PJ",o:"x"},
+{r:"JOSE ALEXANDRE DUCCI",f:"",d:"38.401.026/0001-14",t:"PJ",o:"x"},
+{r:"MAGAZINE DO ENXOVAL",f:"Magazine Enxoval",d:"32.303.528/0001-26",t:"PJ",o:"x"},
+{r:"MAGAZINE SAO JOAO",f:"",d:"45.506.938/0001-16",t:"PJ",o:"x"},
+{r:"MALHA BASICA (Matriz)",f:"Malha Basica",d:"07.522.214/0001-77",t:"PJ",o:"x"},
+{r:"MALHA BASICA (Filial)",f:"Malha Basica",d:"07.522.214/0002-58",t:"PJ",o:"x"},
+{r:"MANDUCA EXPORTADORA",f:"",d:"20.808.510/0001-05",t:"PJ",o:"x"},
+{r:"MANIBI ALIMENTOS (31.792)",f:"Manibi",d:"31.792.890/0001-45",t:"PJ",o:"x"},
+{r:"MECANICA GT",f:"",d:"25.042.945/0001-05",t:"PJ",o:"x"},
+{r:"MERCADO BIAJOLI",f:"",d:"21.482.334/0001-19",t:"PJ",o:"x"},
+{r:"MERCADO BORDADO",f:"",d:"23.716.123/0001-29",t:"PJ",o:"x"},
+{r:"MERCADO E ACOUGUE DANIEL",f:"",d:"32.275.089/0001-95",t:"PJ",o:"x"},
+{r:"MERCADO PRESTES",f:"",d:"42.626.832/0001-68",t:"PJ",o:"x"},
+{r:"MEU BEBE ENXOVAIS",f:"",d:"29.402.223/0001-67",t:"PJ",o:"x"},
+{r:"MUNICIPIO DE ITAPOLIS",f:"",d:"49.979.255/0001-37",t:"PJ",o:"x"},
+{r:"OPUS BURGER & SMOKED",f:"Opus Burger",d:"49.842.616/0001-07",t:"PJ",o:"x"},
+{r:"P & D CONFECCOES",f:"",d:"37.903.300/0001-90",t:"PJ",o:"x"},
+{r:"PLENA",f:"Plena",d:"66.994.450/0001-55",t:"PJ",o:"x"},
+{r:"RAMOS TECIDOS E AVIAMENTOS",f:"",d:"27.330.944/0001-83",t:"PJ",o:"x"},
+{r:"POLLY RH E TRANSPORTES",f:"",d:"42.509.583/0001-20",t:"PJ",o:"x"},
+{r:"CAMA POSTA ENXOVAIS",f:"",d:"53.121.587/0001-53",t:"PJ",o:"x"},
+{r:"MARCAL ENXOVAIS",f:"",d:"43.913.529/0001-09",t:"PJ",o:"x"},
+{r:"PETITICOS ENXOVAIS",f:"",d:"46.866.144/0001-26",t:"PJ",o:"x"},
+{r:"MAFALDA CASADO MASCARO",f:"",d:"45.336.285/0001-74",t:"PJ",o:"x"},
+{r:"LUAN FERNANDO RAMOS",f:"",d:"53.137.100/0001-20",t:"PJ",o:"x"},
+{r:"CARLOS EDUARDO ZENTIL",f:"",d:"53.497.824/0001-85",t:"PJ",o:"x"},
+{r:"ART AZUL DISTRIB.",f:"",d:"50.220.106/0001-79",t:"PJ",o:"x"},
+{r:"CENTRO OESTE JAU",f:"",d:"51.355.433/0001-09",t:"PJ",o:"x"},
+{r:"CITROS SALVA MUDAS (Mat)",f:"",d:"05.619.806/0001-86",t:"PJ",o:"x"},
+{r:"CITROS SALVA MUDAS (Fil)",f:"",d:"05.619.806/0002-67",t:"PJ",o:"x"},
+{r:"BE CORTINAS",f:"",d:"47.891.837/0001-31",t:"PJ",o:"x"},
+{r:"CASA BELLA ENXOVAIS",f:"",d:"46.802.629/0001-56",t:"PJ",o:"x"},
+{r:"CASA DE CARNES AVENIDA",f:"",d:"49.183.714/0001-71",t:"PJ",o:"x"},
+{r:"CASA DE CARNES AVENIDA 2",f:"",d:"49.455.922/0001-82",t:"PJ",o:"x"},
+{r:"CASA DE CARNES AVENIDA 3",f:"",d:"52.355.189/0001-39",t:"PJ",o:"x"},
+{r:"ANDRE LUIS AGUIAR RAMOS",f:"Alpha Contabilidade",d:"39.690.620/0001-35",t:"PJ",o:"x"},
+{r:"ANDRE LUIZ GASTRONOMIA",f:"",d:"36.623.773/0001-71",t:"PJ",o:"x"},
+{r:"B & D ARTE E DECORACAO",f:"",d:"28.805.386/0001-28",t:"PJ",o:"x"},
+{r:"CASA DOS COMPRESSORES",f:"",d:"07.883.800/0001-47",t:"PJ",o:"x"},
+{r:"IBI CLINICA MED. TRANSITO",f:"",d:"30.514.934/0001-02",t:"PJ",o:"x"},
+{r:"MULTI CARTUCHOS",f:"",d:"14.804.722/0001-03",t:"PJ",o:"x"},
+{r:"NL MODA & ESTILO",f:"",d:"13.886.524/0001-73",t:"PJ",o:"x"},
+{r:"MA ACESSORIOS FERRAGENS",f:"",d:"41.089.618/0001-57",t:"PJ",o:"x"},
+{r:"MD SOM E ACESSORIOS",f:"",d:"17.122.401/0001-17",t:"PJ",o:"x"},
+{r:"MANIBI LOJA BORDADO",f:"",d:"37.730.577/0001-69",t:"PJ",o:"x"},
+{r:"ENGLISH GLOBAL LANGUAGE",f:"",d:"23.844.956/0001-75",t:"PJ",o:"x"},
+{r:"LG IDIOMAS",f:"",d:"25.081.344/0001-01",t:"PJ",o:"x"},
+{r:"LIRICA SAUDE",f:"",d:"40.857.973/0001-66",t:"PJ",o:"x"},
+{r:"POS DATA SISTEMAS",f:"",d:"41.150.464/0001-61",t:"PJ",o:"x"},
+{r:"LABORATORIO SODRE",f:"",d:"05.934.885/0016-04",t:"PJ",o:"x"},
+];
+
+const SK='cart_RV_v9',N=new Date(),YA=N.getFullYear(),MA=N.getMonth(),MN=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+function ld(){const s=localStorage.getItem(SK);if(s){const p=JSON.parse(s),sd=new Set(p.map(c=>c.d));let mx=Math.max(...p.map(c=>c.id),0);B.forEach(b=>{if(!sd.has(b.d)){mx++;p.push({r:b.r,f:b.f,d:b.d,t:b.t,o:b.o,id:mx,contrato:'',vencimento:'',responsavel:'',telefone:'',valor:'',situacao:b.o==='x'?'anterior':'',pgto:'',obs:b.o==='x'?'⚠️ Só sist. anterior':''});}});return p.map(c=>({...c,situacao:c.situacao||'',pgto:c.pgto||'',obs:c.obs||'',o:c.o||'a'}));}return B.map((b,i)=>({r:b.r,f:b.f,d:b.d,t:b.t,o:b.o,id:i,contrato:'',vencimento:'',responsavel:'',telefone:'',valor:'',situacao:b.o==='x'?'anterior':'',pgto:'',obs:b.o==='x'?'⚠️ Só sist. anterior':''}));}
+let C=ld(),sC=-1,sAx=true;
+function iA(){const s=document.getElementById('fA'),a=new Set();C.forEach(c=>{if(c.vencimento){const y=+c.vencimento.split('-')[0];if(y>2020)a.add(y);}});[YA-1,YA,YA+1,YA+2].forEach(y=>a.add(y));[...a].sort().forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;s.appendChild(o);});}
+function sy(){document.querySelectorAll('#tB tr').forEach(r=>{const id=+r.dataset.id,c=C.find(x=>x.id===id);if(!c)return;c.situacao=r.querySelector('.ss')?.value??c.situacao;c.contrato=r.querySelector('.sc')?.value??c.contrato;c.vencimento=r.querySelector('.iv')?.value??c.vencimento;c.responsavel=r.querySelector('.ir')?.value??c.responsavel;c.telefone=r.querySelector('.it')?.value??c.telefone;c.valor=r.querySelector('.vl')?.value??c.valor;c.pgto=r.querySelector('.pg')?.value??c.pgto;c.obs=r.querySelector('.io')?.value??c.obs;});}
+function salvar(){sy();localStorage.setItem(SK,JSON.stringify(C));uK();uF();ts('✅ Salvo!');}
+function limpar(){if(confirm('⚠️ Apagar?')){localStorage.removeItem(SK);location.reload();}}
+function ts(m){const t=document.getElementById('tst');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2e3);}
+function gS(v){if(!v)return{l:'PEND.',c:'sp',k:'pendente'};const h=new Date;h.setHours(0,0,0,0);const p=v.split('-'),d=new Date(p[0],p[1]-1,p[2]);d.setHours(0,0,0,0);const df=Math.ceil((d-h)/864e5);if(df<0)return{l:'VENC.',c:'sv',k:'vencido'};if(df<=30)return{l:'≤30D',c:'s3',k:'30'};if(df<=60)return{l:'≤60D',c:'s6',k:'60'};if(df<=90)return{l:'≤90D',c:'s9',k:'90'};return{l:'OK',c:'so',k:'ok'};}
+function pV(v){if(!v)return 0;return parseFloat(v.replace(/[^\d.,]/g,'').replace(/\./g,'').replace(',','.'))||0;}
+function fB(n){return'R$ '+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function uF(){sy();const mf=document.getElementById('fM').value,af=document.getElementById('fA').value;const E=[];
+C.forEach(c=>{if(!c.vencimento||pV(c.valor)===0||c.situacao==='nao_renovado')return;const v=pV(c.valor),p=c.vencimento.split('-'),aV=+p[0],mV=+p[1]-1,nm=c.f||c.r,pg=c.pgto||'';
+if(c.contrato==='anual'){const mn=Math.min(aV,YA),mx=Math.max(aV,YA+1);for(let a=mn;a<=mx;a++){const ps=(a<YA)||(a===YA&&mV<=MA);let tp;if(ps)tp=pg==='recebido'?'rec':'arec';else tp='proj';E.push({nm,rz:c.r,mV,v,tp,aR:a});}}else{const ps=(aV<YA)||(aV===YA&&mV<=MA);let tp;if(ps)tp=pg==='recebido'?'rec':'arec';else tp='proj';E.push({nm,rz:c.r,mV,v,tp,aR:aV});}});
+let F=E.filter(e=>{if(mf!=='t'&&e.mV!==+mf)return false;if(af!=='t'&&e.aR!==+af)return false;return true;});
+let tR=0,tA=0,tP=0,qR=0,qA=0,qP=0;F.forEach(e=>{if(e.tp==='rec'){tR+=e.v;qR++;}else if(e.tp==='arec'){tA+=e.v;qA++;}else{tP+=e.v;qP++;}});
+document.getElementById('fC').innerHTML=`<div class="fd cr"><div class="fdi">💵</div><div class="fdv">${fB(tR)}</div><div class="fdl">Recebido (Pago)</div><div class="fds">${qR} ctr</div></div><div class="fd ca"><div class="fdi">📋</div><div class="fdv">${fB(tA)}</div><div class="fdl">Fechado (A Receber)</div><div class="fds">${qA} ctr</div></div><div class="fd cp"><div class="fdi">📊</div><div class="fdv">${fB(tP)}</div><div class="fdl">Projeção</div><div class="fds">${qP} ctr</div></div><div class="fd ct2"><div class="fdi">💰</div><div class="fdv">${fB(tR+tA+tP)}</div><div class="fdl">Total</div><div class="fds">${qR+qA+qP} lanç.</div></div>`;
+const pm={};F.forEach(e=>{const ch=MN[e.mV]+'/'+e.aR,sr=e.aR*100+e.mV;if(!pm[ch])pm[ch]={v:0,q:0,sr,cl:[],tR:0,tA:0,tP:0};pm[ch].v+=e.v;pm[ch].q++;pm[ch].cl.push(e);if(e.tp==='rec')pm[ch].tR=1;if(e.tp==='arec')pm[ch].tA=1;if(e.tp==='proj')pm[ch].tP=1;});
+const so=Object.entries(pm).sort((a,b)=>a[1].sr-b[1].sr);const mD=document.getElementById('fD');
+if(!so.length){mD.innerHTML='<div class="fe">Preencha contratos, valores e vencimentos.</div>';return;}
+let h='';so.forEach(([m,d])=>{const cl=d.tP&&!d.tR&&!d.tA?'mp':'mr';h+=`<div class="fm ${cl}"><div class="fmh"><div><span class="fmm">${m}</span>`;if(d.tR)h+=`<span class="fmtg tr">💵</span>`;if(d.tA)h+=`<span class="fmtg ta">📋</span>`;if(d.tP)h+=`<span class="fmtg tpp">📊</span>`;h+=`</div><div class="fmt">${fB(d.v)}</div></div><div style="font-size:.6em;opacity:.35">${d.q} lanç.</div><div class="fmc">`;d.cl.forEach(e=>{const sc=e.tp==='rec'?'sr':e.tp==='arec'?'sa':'spp';const st=e.tp==='rec'?'Pago':e.tp==='arec'?'A rec.':'Proj.';h+=`<div class="fml"><div class="fmn" title="${e.rz}">${e.nm.length>22?e.nm.substring(0,22)+'…':e.nm}</div><div><span class="fmvl">${fB(e.v)}</span><span class="fms ${sc}">${st}</span></div></div>`;});h+=`</div></div>`;});mD.innerHTML=h;}
+function uK(){let vc=0,d3=0,d6=0,nr=0,ng=0,at=0,an=0,cl=0;C.forEach(c=>{if(c.situacao==='nao_renovado')nr++;else if(c.situacao==='negociacao')ng++;else if(c.situacao==='ativo'||c.situacao==='novo')at++;else if(c.situacao==='anterior')an++;if(c.situacao!=='nao_renovado'&&c.situacao!=='anterior'){const s=gS(c.vencimento);if(s.k==='vencido')vc++;else if(s.k==='30')d3++;else if(s.k==='60')d6++;}if(c.situacao)cl++;});document.getElementById('kT').textContent=C.length;document.getElementById('kA').textContent=at;document.getElementById('kV').textContent=vc;document.getElementById('k3').textContent=d3;document.getElementById('k6').textContent=d6;document.getElementById('kN').textContent=nr;document.getElementById('kG').textContent=ng;document.getElementById('kX').textContent=an;document.getElementById('kP').textContent=C.length-cl;const pc=C.length>0?Math.round(cl/C.length*100):0;document.getElementById('kC').textContent=pc+'%';document.getElementById('pB').style.width=pc+'%';document.getElementById('pB').textContent=pc+'%';const ac=C.filter(c=>c.o==='x').length;document.getElementById('a1').textContent=C.length-ac;document.getElementById('a2').textContent=ac;document.getElementById('a3').textContent=C.length;const pj=C.filter(c=>c.t==='PJ').length;document.getElementById('a4').textContent=pj+'/'+(C.length-pj);}
+function rnd(ls){ls=ls||C;const tb=document.getElementById('tB');tb.innerHTML='';ls.forEach((c,i)=>{const s=gS(c.vencimento);let rc='';if(c.situacao==='nao_renovado')rc='rn';else if(c.situacao==='anterior'||c.o==='x')rc='ra';else if(s.k==='vencido')rc='rv';else if(s.k==='30')rc='r3';const ob=c.o==='x'?'<span style="background:#f0e6ff;color:#6c5ce7;padding:0 3px;border-radius:5px;font-size:.6em;font-weight:700">ANT</span>':'<span style="background:#eafaf1;color:#00b894;padding:0 3px;border-radius:5px;font-size:.6em;font-weight:700">AT</span>';const tr=document.createElement('tr');tr.className=rc;tr.dataset.id=c.id;tr.innerHTML=`<td style="font-weight:600;color:var(--m);font-size:.66em">${i+1}</td><td style="font-weight:600;max-width:160px;font-size:.72em" title="${c.r}">${c.r.length>24?c.r.substring(0,24)+'…':c.r}</td><td style="color:var(--a);font-size:.72em">${c.f?(c.f.length>13?c.f.substring(0,13)+'…':c.f):'—'}</td><td><span class="${c.t==='PJ'?'tp tj':'tp tf'}">${c.t}</span></td><td style="font-size:.66em;white-space:nowrap">${c.d}</td><td>${ob}</td><td><select class="ei ss" style="width:100px" onchange="oS(this)"><option value="" ${!c.situacao?'selected':''}>—</option><option value="ativo" ${c.situacao==='ativo'?'selected':''}>✅ Ativo</option><option value="nao_renovado" ${c.situacao==='nao_renovado'?'selected':''}>❌ Não Ren.</option><option value="negociacao" ${c.situacao==='negociacao'?'selected':''}>🔄 Negoc.</option><option value="novo" ${c.situacao==='novo'?'selected':''}>🆕 Novo</option><option value="anterior" ${c.situacao==='anterior'?'selected':''}>📋 Ant.</option></select></td><td><select class="ei sc" style="width:60px"><option value="" ${!c.contrato?'selected':''}>—</option><option value="anual" ${c.contrato==='anual'?'selected':''}>Anual</option><option value="mensal" ${c.contrato==='mensal'?'selected':''}>Mensal</option></select></td><td><input type="date" class="ei iv" style="width:110px" value="${c.vencimento}" onchange="oV(this)"></td><td><input type="text" class="ei ir" style="width:95px" value="${c.responsavel||''}" placeholder="Nome..."></td><td><input type="text" class="ei it" style="width:105px" value="${c.telefone||''}" placeholder="Tel..."></td><td><input type="text" class="ei vl" style="width:72px" value="${c.valor||''}" placeholder="0,00"></td><td><select class="ei pg" style="width:76px" onchange="uF()"><option value="" ${!c.pgto?'selected':''}>—</option><option value="recebido" ${c.pgto==='recebido'?'selected':''}>💵 Pago</option><option value="a_receber" ${c.pgto==='a_receber'?'selected':''}>📋 A Rec</option></select></td><td><span class="sb2 ${s.c}">${s.l}</span></td><td><input type="text" class="oi io" value="${c.obs||''}" placeholder="Obs..."></td>`;tb.appendChild(tr);});document.getElementById('rC').innerHTML=`Exibindo <b>${ls.length}</b> de <b>${C.length}</b>`;}
+function oS(el){uR(el.closest('tr'));uK();uF();}function oV(el){const tr=el.closest('tr');const td=tr.querySelectorAll('td')[13];const s=gS(el.value);td.innerHTML=`<span class="sb2 ${s.c}">${s.l}</span>`;uR(tr);uK();uF();}
+function uR(tr){const si=tr.querySelector('.ss').value;const ve=tr.querySelector('.iv').value;const s=gS(ve);tr.className='';if(si==='nao_renovado')tr.className='rn';else if(si==='anterior')tr.className='ra';else if(s.k==='vencido')tr.className='rv';else if(s.k==='30')tr.className='r3';}
+function filt(){sy();const b=document.getElementById('sI').value.toLowerCase().trim();const sf=document.getElementById('fSi').value;const st=document.getElementById('fSt').value;const tp=document.getElementById('fTp').value;const og=document.getElementById('fOr').value;let f=C.filter(c=>{if(b){const h=(c.r+' '+c.f+' '+c.d+' '+(c.responsavel||'')+' '+(c.obs||'')).toLowerCase();if(!h.includes(b))return false;}if(sf!=='t'&&c.situacao!==sf)return false;if(st!=='t'){const s=gS(c.vencimento);if(s.k!==st)return false;}if(tp!=='t'&&c.t.toLowerCase()!==tp)return false;if(og!=='t'&&c.o!==og)return false;return true;});rnd(f);}
+function srt(col){sy();if(sC===col)sAx=!sAx;else{sC=col;sAx=true;}C.sort((a,b)=>{let va,vb;if(col===0){va=a.id;vb=b.id;}else if(col===1){va=a.r.toLowerCase();vb=b.r.toLowerCase();}else if(col===2){va=(a.f||'').toLowerCase();vb=(b.f||'').toLowerCase();}else if(col===8){va=a.vencimento||'9999';vb=b.vencimento||'9999';}if(va<vb)return sAx?-1:1;if(va>vb)return sAx?1:-1;return 0;});filt();}
+function csv(){sy();let c='Razao;Fantasia;Tipo;Doc;Origem;Situacao;Contrato;Vencimento;Resp;Tel;Valor;Pgto;Status;Obs\n';C.forEach(x=>{const s=gS(x.vencimento);c+=`"${x.r}";"${x.f}";"${x.t}";"${x.d}";"${x.o==='x'?'Anterior':'Atual'}";"${x.situacao}";"${x.contrato}";"${x.vencimento}";"${x.responsavel||''}";"${x.telefone||''}";"${x.valor||''}";"${x.pgto}";"${s.l}";"${(x.obs||'').replace(/"/g,"'")}"\n`;});const bl=new Blob(['\ufeff'+c],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='carteira_'+new Date().toISOString().slice(0,10)+'.csv';a.click();ts('📤 CSV!');}
+setInterval(()=>{if(document.querySelectorAll('#tB tr').length>0){sy();localStorage.setItem(SK,JSON.stringify(C));}},6e4);
+document.getElementById('dt').textContent=N.toLocaleDateString('pt-BR');iA();rnd();uK();uF();
+</script>
+</body>
+</html>
