@@ -84,7 +84,13 @@ select.ei{cursor:pointer}
 <div class="se"><div class="st">🔎 Auditoria</div><div class="ag"><div class="ai"><div class="al">Sist. Atual</div><div class="av" id="a1">0</div></div><div class="ai"><div class="al">Só Anterior</div><div class="av" id="a2">0</div></div><div class="ai"><div class="al">Unificada</div><div class="av" id="a3">0</div></div><div class="ai"><div class="al">PJ / PF</div><div class="av" id="a4">0</div></div></div></div>
 </div>
 <div class="to" id="tst"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const SUPABASE_URL = 'https://cimshsffufhjtpnawbng.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpbXNoc2ZmdWZoanRwbmF3Ym5xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA0MTY2NDAsImV4cCI6MjA5NTk5MjY0MH0.UgbJUPZ9IBIVN9y7iohzsnrtIPhiXrXjpENCMXYr_tY';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let usandoSupabase = true;
+
 // === BASE COMPLETA UNIFICADA (369 clientes únicos por documento) ===
 // o:"a" = está no software atual | o:"x" = SÓ no sistema anterior
 // t:"PJ" ou "PF" | tel: telefone quando disponível
@@ -512,9 +518,82 @@ const B=
 const SK='cart_RV_v9',N=new Date(),YA=N.getFullYear(),MA=N.getMonth(),MN=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 function ld(){const s=localStorage.getItem(SK);if(s){const p=JSON.parse(s),sd=new Set(p.map(c=>c.d));let mx=Math.max(...p.map(c=>c.id),0);B.forEach(b=>{if(!sd.has(b.d)){mx++;p.push({r:b.r,f:b.f,d:b.d,t:b.t,o:b.o,id:mx,contrato:'',vencimento:'',responsavel:'',telefone:'',valor:'',situacao:b.o==='x'?'anterior':'',pgto:'',obs:b.o==='x'?'⚠️ Só sist. anterior':''});}});return p.map(c=>({...c,situacao:c.situacao||'',pgto:c.pgto||'',obs:c.obs||'',o:c.o||'a'}));}return B.map((b,i)=>({r:b.r,f:b.f,d:b.d,t:b.t,o:b.o,id:i,contrato:'',vencimento:'',responsavel:'',telefone:'',valor:'',situacao:b.o==='x'?'anterior':'',pgto:'',obs:b.o==='x'?'⚠️ Só sist. anterior':''}));}
 let C=ld(),sC=-1,sAx=true;
+
+function normalizarData(v){
+  if(!v)return null;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(v))return v;
+  return null;
+}
+function clientToRow(c){
+  return {
+    id:c.id,
+    razao_social:c.r||'',
+    fantasia:c.f||'',
+    documento:c.d||'',
+    tipo:c.t||'',
+    origem:c.o||'a',
+    situacao:c.situacao||'',
+    contrato:c.contrato||'',
+    vencimento:normalizarData(c.vencimento),
+    responsavel:c.responsavel||'',
+    telefone:c.telefone||'',
+    valor:c.valor||'',
+    pagamento:c.pgto||'',
+    observacoes:c.obs||'',
+    updated_at:new Date().toISOString()
+  };
+}
+function rowToClient(r){
+  return {
+    id:r.id,
+    r:r.razao_social||'',
+    f:r.fantasia||'',
+    d:r.documento||'',
+    t:r.tipo||'',
+    o:r.origem||'a',
+    situacao:r.situacao||'',
+    contrato:r.contrato||'',
+    vencimento:r.vencimento||'',
+    responsavel:r.responsavel||'',
+    telefone:r.telefone||'',
+    valor:r.valor||'',
+    pgto:r.pagamento||'',
+    obs:r.observacoes||''
+  };
+}
+async function carregarSupabase(){
+  try{
+    const {data,error}=await supabaseClient.from('clientes').select('*').order('id',{ascending:true});
+    if(error)throw error;
+    if(data&&data.length){
+      C=data.map(rowToClient);
+      localStorage.setItem(SK,JSON.stringify(C));
+      iA();rnd();uK();uF();ts('✅ Dados carregados do Supabase');
+      return;
+    }
+    ts('ℹ️ Supabase vazio. Clique em Salvar para enviar a base inicial.');
+  }catch(e){
+    usandoSupabase=false;
+    console.error('Erro Supabase:',e);
+    ts('⚠️ Sem conexão com Supabase. Usando dados locais.');
+  }
+}
+async function salvarSupabase(){
+  sy();
+  const dados=C.map(clientToRow);
+  const lote=100;
+  for(let i=0;i<dados.length;i+=lote){
+    const parte=dados.slice(i,i+lote);
+    const {error}=await supabaseClient.from('clientes').upsert(parte,{onConflict:'id'});
+    if(error)throw error;
+  }
+  localStorage.setItem(SK,JSON.stringify(C));
+  uK();uF();ts('✅ Salvo online no Supabase!');
+}
+
 function iA(){const s=document.getElementById('fA'),a=new Set();C.forEach(c=>{if(c.vencimento){const y=+c.vencimento.split('-')[0];if(y>2020)a.add(y);}});[YA-1,YA,YA+1,YA+2].forEach(y=>a.add(y));[...a].sort().forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y;s.appendChild(o);});}
 function sy(){document.querySelectorAll('#tB tr').forEach(r=>{const id=+r.dataset.id,c=C.find(x=>x.id===id);if(!c)return;c.situacao=r.querySelector('.ss')?.value??c.situacao;c.contrato=r.querySelector('.sc')?.value??c.contrato;c.vencimento=r.querySelector('.iv')?.value??c.vencimento;c.responsavel=r.querySelector('.ir')?.value??c.responsavel;c.telefone=r.querySelector('.it')?.value??c.telefone;c.valor=r.querySelector('.vl')?.value??c.valor;c.pgto=r.querySelector('.pg')?.value??c.pgto;c.obs=r.querySelector('.io')?.value??c.obs;});}
-function salvar(){sy();localStorage.setItem(SK,JSON.stringify(C));uK();uF();ts('✅ Salvo!');}
+async function salvar(){try{await salvarSupabase();}catch(e){console.error(e);localStorage.setItem(SK,JSON.stringify(C));ts('⚠️ Erro ao salvar online. Salvo apenas neste computador.');alert('Erro ao salvar no Supabase: '+e.message);}}
 function limpar(){if(confirm('⚠️ Apagar?')){localStorage.removeItem(SK);location.reload();}}
 function ts(m){const t=document.getElementById('tst');t.textContent=m;t.style.display='block';setTimeout(()=>t.style.display='none',2e3);}
 function gS(v){if(!v)return{l:'PEND.',c:'sp',k:'pendente'};const h=new Date;h.setHours(0,0,0,0);const p=v.split('-'),d=new Date(p[0],p[1]-1,p[2]);d.setHours(0,0,0,0);const df=Math.ceil((d-h)/864e5);if(df<0)return{l:'VENC.',c:'sv',k:'vencido'};if(df<=30)return{l:'≤30D',c:'s3',k:'30'};if(df<=60)return{l:'≤60D',c:'s6',k:'60'};if(df<=90)return{l:'≤90D',c:'s9',k:'90'};return{l:'OK',c:'so',k:'ok'};}
@@ -538,7 +617,7 @@ function filt(){sy();const b=document.getElementById('sI').value.toLowerCase().t
 function srt(col){sy();if(sC===col)sAx=!sAx;else{sC=col;sAx=true;}C.sort((a,b)=>{let va,vb;if(col===0){va=a.id;vb=b.id;}else if(col===1){va=a.r.toLowerCase();vb=b.r.toLowerCase();}else if(col===2){va=(a.f||'').toLowerCase();vb=(b.f||'').toLowerCase();}else if(col===8){va=a.vencimento||'9999';vb=b.vencimento||'9999';}if(va<vb)return sAx?-1:1;if(va>vb)return sAx?1:-1;return 0;});filt();}
 function csv(){sy();let c='Razao;Fantasia;Tipo;Doc;Origem;Situacao;Contrato;Vencimento;Resp;Tel;Valor;Pgto;Status;Obs\n';C.forEach(x=>{const s=gS(x.vencimento);c+=`"${x.r}";"${x.f}";"${x.t}";"${x.d}";"${x.o==='x'?'Anterior':'Atual'}";"${x.situacao}";"${x.contrato}";"${x.vencimento}";"${x.responsavel||''}";"${x.telefone||''}";"${x.valor||''}";"${x.pgto}";"${s.l}";"${(x.obs||'').replace(/"/g,"'")}"\n`;});const bl=new Blob(['\ufeff'+c],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(bl);a.download='carteira_'+new Date().toISOString().slice(0,10)+'.csv';a.click();ts('📤 CSV!');}
 setInterval(()=>{if(document.querySelectorAll('#tB tr').length>0){sy();localStorage.setItem(SK,JSON.stringify(C));}},6e4);
-document.getElementById('dt').textContent=N.toLocaleDateString('pt-BR');iA();rnd();uK();uF();
+document.getElementById('dt').textContent=N.toLocaleDateString('pt-BR');iA();rnd();uK();uF();carregarSupabase();
 </script>
 </body>
 </html>
